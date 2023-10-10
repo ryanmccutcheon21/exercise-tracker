@@ -59,7 +59,7 @@ app.post('/api/users/:_id/exercises', async (req, res) => {
     if (!user) {
       res.send('Could not find user')
     } else {
-      const exerciseObj = Exercise({
+      const exerciseObj = new Exercise({
         user_id: user._id,
         description,
         duration,
@@ -67,11 +67,11 @@ app.post('/api/users/:_id/exercises', async (req, res) => {
       })
       const exercise = await exerciseObj.save()
       res.json({
-        _id: user._id,
         username: user.username,
         description: exercise.description,
         duration: exercise.duration,
-        date: new Date(exercise.date).toDateString()
+        date: new Date(exercise.date).toDateString(),
+        _id: user._id,
       })
     }
   } catch (error) {
